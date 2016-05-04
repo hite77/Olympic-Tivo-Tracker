@@ -1,5 +1,7 @@
 package com.hiteware.olympics;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -49,8 +51,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        String tivoPassword = "";
+        try {
+            ApplicationInfo applicationInfo = getApplicationContext().getPackageManager()
+                    .getApplicationInfo(getApplicationContext().getPackageName(),
+                            PackageManager.GET_META_DATA);
+            Bundle bundle = applicationInfo.metaData;
+            tivoPassword = bundle.getString("tivo-password");
+            Log.d(TAG, "tivo password: " + tivoPassword);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        new TestHttpThread().execute("https://192.168.50.146/nowplaying/index.html","tivo",tivoPassword);
 
 
+//        new TestHttpThread().execute("https://192.168.50.146/nowplaying/"+decode("TiVoConnect?Command=QueryContainer&amp;Container=%2FNowPlaying%2F17%2F97868152"),"tivo",tivoPassword);
+//        TextView textview = (TextView)findViewById(R.id.Textview);
+//          new TestHttpThread().execute("https://192.168.50.146/TiVoConnect?Command=QueryContainer&Container=%2FNowPlaying&Recurse=Yes","tivo",tivoPassword);
+//        new TestHttpThread().execute("https://192.168.50.146/%2FNowPlaying%2F17%2F147252345","tivo",tivoPassword);
+//        new TestHttpThread().execute("https://192.168.50.146/nowplaying/TiVoConnect?Command=QueryContainer&Container=%2FNowPlaying%2F17%2F17030","tivo",tivoPassword);
 //
     }
 

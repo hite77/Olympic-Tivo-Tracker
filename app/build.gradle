@@ -12,7 +12,18 @@ android {
         versionName "1.0"
     }
     buildTypes {
+        debug {
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file('properties').newDataInputStream())
+            def tivoPassword = properties.getProperty('tivo.password')
+            resValue "string", "tivo_password", tivoPassword
+        }
+
         release {
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file('properties').newDataInputStream())
+            def tivoPassword = properties.getProperty('tivo.password')
+            resValue "string", "tivo_password", tivoPassword
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
