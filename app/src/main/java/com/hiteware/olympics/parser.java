@@ -1,7 +1,5 @@
 package com.hiteware.olympics;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
@@ -10,26 +8,31 @@ import java.util.ArrayList;
 public class parser {
 
     ArrayList<String> items = new ArrayList<>();
+    ArrayList<Recording> recordings = new ArrayList<>();
 
     public void parse(String result) {
 
         while (true) {
             //<b>Archer: &quot;Motherless Child&quot;</b>
-
             int left = result.indexOf("<b>")+ 2;
             int right = result.indexOf("</b>");
 
-            if (left == -1) break;
+            if ((left == -1) || (right == -1)) {
+                break;
+            }
 
             String sub = result.substring(left + 1, right);
-
-            items.add(sub);
-            Log.v("Output", sub);
+            Recording recording = new Recording();
+            recording.setTitle(sub);
+            recordings.add(recording);
 
             // Put together a new string
             result =
-                    result.substring(right + 5);
+                    result.substring(right + 1);
         }
-        items.size();
+    }
+
+    public ArrayList<Recording> getRecordings() {
+        return recordings;
     }
 }
