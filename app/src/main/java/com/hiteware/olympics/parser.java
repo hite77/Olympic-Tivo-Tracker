@@ -7,11 +7,12 @@ import java.util.ArrayList;
  */
 public class parser {
 
-    ArrayList<String> items = new ArrayList<>();
     ArrayList<Recording> recordings = new ArrayList<>();
 
-    public void parse(String result) {
+    private String replaceQuot(String text) { return text.replaceAll("&quot;", "\""); }
 
+    public void parse(String result) {
+        result = replaceQuot(result);
         while (true) {
             //<b>Archer: &quot;Motherless Child&quot;</b>
             int left = result.indexOf("<b>")+ 2;
