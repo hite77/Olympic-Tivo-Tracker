@@ -14,23 +14,29 @@ public class parser {
     public void parse(String result) {
         result = replaceQuot(result);
         while (true) {
-            //<b>Archer: &quot;Motherless Child&quot;</b>
-            int left = result.indexOf("<b>")+ 2;
-            int right = result.indexOf("</b>");
+            String line = findPieceOfString(result,"<tr ","</tr>", 4);
+            if (line.equals("")) break;
 
-            if ((left == -1) || (right == -1)) {
-                break;
-            }
-
-            String sub = result.substring(left + 1, right);
+            result = result.substring(result.indexOf("</tr>") + 1);
             Recording recording = new Recording();
-            recording.setTitle(sub);
-            recordings.add(recording);
 
-            // Put together a new string
-            result =
-                    result.substring(right + 1);
+            String title = findPieceOfString(line,"<b>","</b>",3);
+            recording.setTitle(title);
+            recording.setDescription(findPieceOfString(line, "<br>", "</td>",4));
+
+            if (!title.equals("")) recordings.add(recording);
         }
+    }
+
+    private String findPieceOfString(String line, String startString, String endString, int startOffset) {
+        String result = "";
+        int leftSide = line.indexOf(startString) + startOffset;
+        int rightSide = line.indexOf(endString, leftSide);
+
+        if ((leftSide != -1) && (rightSide != -1)) {
+            result = line.substring(leftSide, rightSide);
+        }
+        return result;
     }
 
     public ArrayList<Recording> getRecordings() {
