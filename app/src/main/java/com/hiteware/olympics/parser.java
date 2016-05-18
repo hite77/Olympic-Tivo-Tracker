@@ -8,23 +8,34 @@ import java.util.ArrayList;
 public class parser {
 
     ArrayList<Recording> recordings = new ArrayList<>();
+    ArrayList<String> folders = new ArrayList<>();
+
+    private String baseFolderName = "https://192.168.50.146/nowplaying/";
 
     private String replaceQuot(String text) { return text.replaceAll("&quot;", "\""); }
+    private String replaceAmp(String text) { return text.replaceAll("&amp;", "&"); }
 
     public void parse(String result) {
-        result = replaceQuot(result);
+        result = replaceAmp(replaceQuot(result));
         while (true) {
             String line = findPieceOfString(result,"<tr ","</tr>", 4);
             if (line.equals("")) break;
 
             result = result.substring(result.indexOf("</tr>") + 1);
-            Recording recording = new Recording();
 
-            String title = findPieceOfString(line,"<b>","</b>",3);
-            recording.setTitle(title);
-            recording.setDescription(findPieceOfString(line, "<br>", "</td>",4));
+            String folder = findPieceOfString(line,"<a href=\"","\">folder</a>",9);
+            if (!folder.equals("")) {
+                folders.add(baseFolderName+folder);
+            }
+            else {
+                Recording recording = new Recording();
 
-            if (!title.equals("")) recordings.add(recording);
+                String title = findPieceOfString(line, "<b>", "</b>", 3);
+                recording.setTitle(title);
+                recording.setDescription(findPieceOfString(line, "<br>", "</td>", 4));
+
+                if (!title.equals("")) recordings.add(recording);
+            }
         }
     }
 
@@ -42,4 +53,6 @@ public class parser {
     public ArrayList<Recording> getRecordings() {
         return recordings;
     }
+
+    public ArrayList<String> getFolders() { return folders; }
 }

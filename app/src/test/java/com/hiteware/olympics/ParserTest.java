@@ -18,12 +18,9 @@ public class ParserTest {
         parser parser = new parser();
         parser.parse(testData);
         ArrayList<Recording> recordings = parser.getRecordings();
-        assertThat(recordings.size(), equalTo(5));
+        assertThat(recordings.size(), equalTo(2));
         assertThat(recordings.get(0).getTitle(), equalTo("After Earth"));
-        assertThat(recordings.get(1).getTitle(), equalTo("The Outer Limits"));
-        assertThat(recordings.get(2).getTitle(), equalTo("A Chef's Life"));
-        assertThat(recordings.get(3).getTitle(), equalTo("The Simpsons: \"The Bart of War\""));
-        assertThat(recordings.get(4).getTitle(), equalTo("Kitchen Nightmares"));
+        assertThat(recordings.get(1).getTitle(), equalTo("The Simpsons: \"The Bart of War\""));
     }
 
     @Test
@@ -34,6 +31,21 @@ public class ParserTest {
         parser.parse(testData);
         ArrayList<Recording> recordings = parser.getRecordings();
         assertThat(recordings.get(0).getDescription(), equalTo(firstDescription));
-        assertThat(recordings.get(3).getDescription(), equalTo(secondDescription));
+        assertThat(recordings.get(1).getDescription(), equalTo(secondDescription));
+    }
+
+    @Test
+    public void canParseFolders() {
+        String firstFolder = "https://192.168.50.146/nowplaying/TiVoConnect?Command=QueryContainer&Container=%2FNowPlaying%2F17%2F17030";
+        String secondFolder = "https://192.168.50.146/nowplaying/TiVoConnect?Command=QueryContainer&Container=%2FNowPlaying%2F17%2F279030631";
+        String thirdFolder = "https://192.168.50.146/nowplaying/TiVoConnect?Command=QueryContainer&Container=%2FNowPlaying%2F17%2F97868152";
+
+        parser parser = new parser();
+        parser.parse(testData);
+        ArrayList<String> folders = parser.getFolders();
+        assertThat(folders.size(), equalTo(3));
+        assertThat(folders.get(0), equalTo(firstFolder));
+        assertThat(folders.get(1), equalTo(secondFolder));
+        assertThat(folders.get(2), equalTo(thirdFolder));
     }
 }
