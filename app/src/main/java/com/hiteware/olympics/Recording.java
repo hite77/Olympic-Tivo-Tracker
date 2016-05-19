@@ -6,6 +6,7 @@ package com.hiteware.olympics;
 public class Recording {
     String title = "";
     String description = "";
+    String channel = "";
 
     public String getTitle() {
         return title;
@@ -22,4 +23,8 @@ public class Recording {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getChannel() { return channel; }
+
+    public void setChannel(String channel) { this.channel = channel; }
 }

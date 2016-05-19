@@ -18,30 +18,31 @@ public class parser {
     public void parse(String result) {
         result = replaceAmp(replaceQuot(result));
         while (true) {
-            String line = findPieceOfString(result,"<tr ","</tr>", 4);
+            String line = findPieceOfString(result,"<tr ","</tr>");
             if (line.equals("")) break;
 
             result = result.substring(result.indexOf("</tr>") + 1);
 
-            String folder = findPieceOfString(line,"<a href=\"","\">folder</a>",9);
+            String folder = findPieceOfString(line,"<a href=\"","\">folder</a>");
             if (!folder.equals("")) {
                 folders.add(baseFolderName+folder);
             }
             else {
                 Recording recording = new Recording();
 
-                String title = findPieceOfString(line, "<b>", "</b>", 3);
+                String title = findPieceOfString(line, "<b>", "</b>");
                 recording.setTitle(title);
-                recording.setDescription(findPieceOfString(line, "<br>", "</td>", 4));
+                recording.setDescription(findPieceOfString(line, "<br>", "</td>"));
+                recording.setChannel(findPieceOfString(line, "alt=\"", "\">"));
 
                 if (!title.equals("")) recordings.add(recording);
             }
         }
     }
 
-    private String findPieceOfString(String line, String startString, String endString, int startOffset) {
+    private String findPieceOfString(String line, String startString, String endString) {
         String result = "";
-        int leftSide = line.indexOf(startString) + startOffset;
+        int leftSide = line.indexOf(startString) + startString.length();
         int rightSide = line.indexOf(endString, leftSide);
 
         if ((leftSide != -1) && (rightSide != -1)) {
