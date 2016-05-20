@@ -66,4 +66,20 @@ public class ParserTest {
         assertThat(recordings.get(7).getChannel(), equalTo("WOSUDT"));
         assertThat(recordings.get(8).getChannel(), equalTo("WOSUDT"));
     }
+    
+    @Test
+    public void canParseThatItIsRecording() {
+        parser parser = new parser();
+        parser.parse(testData2);
+        ArrayList<Recording> recordings = parser.getRecordings();
+        assertThat(recordings.get(0).getIsRecording(), equalTo(true));
+        assertThat(recordings.get(1).getIsRecording(), equalTo(false));
+        assertThat(recordings.get(2).getIsRecording(), equalTo(false));
+        assertThat(recordings.get(3).getIsRecording(), equalTo(false));
+        assertThat(recordings.get(4).getIsRecording(), equalTo(false));
+        assertThat(recordings.get(5).getIsRecording(), equalTo(false));
+        assertThat(recordings.get(6).getIsRecording(), equalTo(false));
+        assertThat(recordings.get(7).getIsRecording(), equalTo(false));
+        assertThat(recordings.get(8).getIsRecording(), equalTo(false));
+    }
 }

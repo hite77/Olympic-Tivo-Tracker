@@ -7,6 +7,7 @@ public class Recording {
     String title = "";
     String description = "";
     String channel = "";
+    boolean isRecording = false;
 
     public String getTitle() {
         return title;
@@ -27,4 +28,8 @@ public class Recording {
     public String getChannel() { return channel; }
 
     public void setChannel(String channel) { this.channel = channel; }
+
+    public boolean getIsRecording() { return isRecording; }
+
+    public void setRecord() { isRecording = true; }
 }

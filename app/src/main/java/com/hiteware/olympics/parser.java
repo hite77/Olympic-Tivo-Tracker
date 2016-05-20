@@ -34,6 +34,7 @@ public class parser {
                 recording.setTitle(title);
                 recording.setDescription(findPieceOfString(line, "<br>", "</td>"));
                 recording.setChannel(findPieceOfString(line, "alt=\"", "\">"));
+                if (findPieceOfString(line, "<i>", "</i>").equals("Recording")) recording.setRecord();
 
                 if (!title.equals("")) recordings.add(recording);
             }
