@@ -52,38 +52,24 @@ public class ParserTest {
         parser parser = new parser();
         parser.parse(testData2);
         ArrayList<Recording> recordings = parser.getRecordings();
-        assertThat(recordings.size(), equalTo(9));
-        assertThat(recordings.get(0).getChannel(), equalTo("FREFMHD"));
-        assertThat(recordings.get(1).getChannel(), equalTo("WCMHDT"));
-        assertThat(recordings.get(2).getChannel(), equalTo("FXHD"));
-        assertThat(recordings.get(3).getChannel(), equalTo("WOSUDT"));
-        assertThat(recordings.get(4).getChannel(), equalTo("WTTEDT"));
-        assertThat(recordings.get(5).getChannel(), equalTo("WOSUDT"));
-        assertThat(recordings.get(6).getChannel(), equalTo("TCMHD"));
+        assertThat(recordings.size(), equalTo(8));
+        assertThat(recordings.get(0).getChannel(), equalTo("WCMHDT"));
+        assertThat(recordings.get(1).getChannel(), equalTo("FXHD"));
+        assertThat(recordings.get(2).getChannel(), equalTo("WOSUDT"));
+        assertThat(recordings.get(3).getChannel(), equalTo("WTTEDT"));
+        assertThat(recordings.get(4).getChannel(), equalTo("WOSUDT"));
+        assertThat(recordings.get(5).getChannel(), equalTo("TCMHD"));
+        assertThat(recordings.get(6).getChannel(), equalTo("WOSUDT"));
         assertThat(recordings.get(7).getChannel(), equalTo("WOSUDT"));
-        assertThat(recordings.get(8).getChannel(), equalTo("WOSUDT"));
     }
 
-    @Test
-    public void canParseThatItIsRecording() {
-        parser parser = new parser();
-        parser.parse(testData2);
-        ArrayList<Recording> recordings = parser.getRecordings();
-        assertThat(recordings.get(0).getIsRecording(), equalTo(true));
-        assertThat(recordings.get(1).getIsRecording(), equalTo(false));
-        assertThat(recordings.get(2).getIsRecording(), equalTo(false));
-        assertThat(recordings.get(3).getIsRecording(), equalTo(false));
-        assertThat(recordings.get(4).getIsRecording(), equalTo(false));
-        assertThat(recordings.get(5).getIsRecording(), equalTo(false));
-        assertThat(recordings.get(6).getIsRecording(), equalTo(false));
-        assertThat(recordings.get(7).getIsRecording(), equalTo(false));
-        assertThat(recordings.get(8).getIsRecording(), equalTo(false));
-    }
+    // todo: decide what is needed....
+    //
 
-//    public void assertHelper(Recording recording, String date, String length, String size) {
+//    public void assertHelper(Recording recording, String date, int length, float size) {
 //        assertThat(recording.getDate(), equalTo(date));
-//        assertThat(recording.getLength(), equalTo(length));
-//        assertThat(recording.getSize(), equalTo(size));
+        //assertThat(recording.getTime(), equalTo(length));
+        //assertThat(recording.getSize(), equalTo(size));
 //    }
 
 //    @Test
@@ -91,9 +77,13 @@ public class ParserTest {
 //        parser parser = new parser();
 //        parser.parse(testData2);
 //        ArrayList<Recording> recordings = parser.getRecordings();
-//        assertHelper(recordings.get(0),"","","");
-        // might need to have it convert the strings into other entries... I might not need the date, just throw it away....
-        // length change to how many hours.. and size convert to GB, and work out GB per hour for each channel.
-        //
+//        assertHelper(recordings.get(0),"5/15",1*60*60+33*60,(float) 9.23); //5/15 1:33:00 9.23 GB
+//        assertHelper(recordings.get(1),"5/13",1*60*60+59*60+59,(float)7.78); // 5/13 1:59:59 7.78 GB
+//        assertHelper(recordings.get(2),"3/22",1*60*60+30*60,(float)7.24); // 3/22 1:30:00 7.24 GB
+//        assertHelper(recordings.get(3),"3/21",1*60*60+59*60+55,(float)11.65); //3/21 1:59:55 11.65 GB
+//        assertHelper(recordings.get(4),"2/25",1*60*60,(float)4.73); //2/25 1:00:00 4.73 GB
+//        assertHelper(recordings.get(5),"1/23",2*60*60+29*60+57,(float)9.80); // 1/23 2:29:57 9.80 GB
+//        assertHelper(recordings.get(6),"1/9",1*60*60,(float)4.85); // 1/9 1:00:00 4.85 GB
+//        assertHelper(recordings.get(7),"1/8",1*60*60,(float)4.80); // 1/8 1:00:00 4.80 GB
 //    }
 }

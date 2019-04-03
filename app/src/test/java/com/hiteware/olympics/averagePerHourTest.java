@@ -90,6 +90,18 @@ public class averagePerHourTest {
     }
 
     @Test
+    public void canPersistAveragesAndRecallForMultipleChannels() {
+        Averager averager = new Averager();
+        averager.calculate("1:00:00", "1.0 GB", "AMCHD");
+        averager.calculate("2:00:00", "1.0 GB", "IFCHD");
+
+        averager = new Averager();
+
+        assertThat(averager.retrieve("AMCHD"), equalTo((float) 1.0));
+        assertThat(averager.retrieve("IFCHD"), equalTo((float) 0.5));
+    }
+
+    @Test
     public void canAverageMultipleChannelsAndReturnAverageOfAllForChannelsNotRecorded() {
         Averager averager = new Averager();
         averager.calculate("1:00:00","1.0 GB", "AMCHD");

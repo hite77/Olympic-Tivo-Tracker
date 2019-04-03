@@ -6,12 +6,10 @@ import java.util.ArrayList;
  * Created on 5/3/16.
  */
 public class parser {
-
     ArrayList<Recording> recordings = new ArrayList<>();
     ArrayList<String> folders = new ArrayList<>();
 
     private String baseFolderName = "https://192.168.50.146/nowplaying/";
-
     private String replaceQuot(String text) { return text.replaceAll("&quot;", "\""); }
     private String replaceAmp(String text) { return text.replaceAll("&amp;", "&"); }
 
@@ -34,9 +32,13 @@ public class parser {
                 recording.setTitle(title);
                 recording.setDescription(findPieceOfString(line, "<br>", "</td>"));
                 recording.setChannel(findPieceOfString(line, "alt=\"", "\">"));
-                if (findPieceOfString(line, "<i>", "</i>").equals("Recording")) recording.setRecord();
+                // need to parse the other pieces...
+                //5/15 1:33:00 9.23 GB <td align="center" valign="top" nowrap> --> first in line... cut line to everything after... then search for next <br> to </td>(5/15 date) ...
+                //find <td align="center" valign="top" nowrap> to <br>(1:33:00 convert to seconds)  then  same <br> to </td> (9.23 GB)
+                // possibly call findPieceOfString with substrings....
+                // find positions of key pieces, pass careful substrings in....
 
-                if (!title.equals("")) recordings.add(recording);
+                if (!title.equals("") && !findPieceOfString(line, "<i>", "</i>").equals("Recording")) recordings.add(recording);
             }
         }
     }
@@ -51,6 +53,10 @@ public class parser {
         }
         return result;
     }
+
+//    private String findPieceAndCut(String line, String startString, String endString) {
+
+//    }
 
     public ArrayList<Recording> getRecordings() {
         return recordings;

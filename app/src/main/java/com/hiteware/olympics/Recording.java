@@ -7,7 +7,9 @@ public class Recording {
     String title = "";
     String description = "";
     String channel = "";
-    boolean isRecording = false;
+    String date = "";
+    int time = 0;
+    float size = 0;
 
     public String getTitle() {
         return title;
@@ -29,7 +31,9 @@ public class Recording {
 
     public void setChannel(String channel) { this.channel = channel; }
 
-    public boolean getIsRecording() { return isRecording; }
+    public String getDate() { return date; }
 
-    public void setRecord() { isRecording = true; }
+    public int getTime() { return time; }
+
+    public Float getSize() { return size; }
 }

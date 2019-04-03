@@ -1,9 +1,11 @@
 package com.hiteware.olympics;
 
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
@@ -161,4 +163,17 @@ public class MainActivity extends AppCompatActivity {
             return new DefaultHttpClient();
         }
     }
+
+    private void writeToFile(String Channel, float average, int position)
+    {
+        SharedPreferences app_preferences =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = app_preferences.edit();
+        editor.putString("Channel"+Integer.toString(position), Channel);
+        editor.putFloat("Average"+Integer.toString(position), average);
+
+        // Commit the edits!
+        editor.commit();
+    }
+
 }

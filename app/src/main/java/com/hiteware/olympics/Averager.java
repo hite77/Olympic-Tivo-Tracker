@@ -27,11 +27,15 @@ public class Averager {
         float average = gb/timeFloat;
         int pos = channels.indexOf(Channel);
         if (pos != -1) {
-            averages.set(pos, (float) ((average+averages.get(pos)) /2.0));
+            float newAverage = (float) (average+averages.get(pos)/ 2.0);
+            averages.set(pos, newAverage);
+
+//            writeToFile(Channel, newAverage);
         }
         else {
             averages.add(average);
             channels.add(Channel);
+//            writeToFile(Channel,average);
         }
         return average;
     }
